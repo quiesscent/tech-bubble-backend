@@ -160,7 +160,7 @@ Use the contact page for inquiries.
 
 Contributing
 
-We welcome contributions to enhance Community Connect!
+We welcome contributions to enhance Tech Bubble Community!
 
 Steps to Contribute:
 
