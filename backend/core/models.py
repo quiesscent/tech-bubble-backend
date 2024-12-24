@@ -16,6 +16,7 @@ class Team(models.Model):
     name = models.CharField(max_length=100)
     image = models.ImageField(upload_to='team/', default='team.png')
     role = models.CharField(max_length=200)
+    experience = models.IntegerField(default=0)
     x_link= models.URLField(max_length=200)
     linkedln_link = models.URLField(max_length=200)
     github_link = models.URLField(max_length=200)
