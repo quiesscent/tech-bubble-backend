@@ -6,7 +6,7 @@ from django.conf import settings
 from .models import PasswordResetRequest
 from .serializers import *
 from django.contrib.auth import get_user_model
-
+from .permissions import IsOwnerOrAdmin
 User  = get_user_model()
 
 class UserCreate(generics.CreateAPIView):
