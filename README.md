@@ -105,38 +105,56 @@ Tech Bubble Community members, organizers, tech enthusiasts, the public, and con
 
 2. Install dependencies:
 
+```bash
 npm install
+```
+
 
 3. Run the frontend server:
-
+```bash
+```bash
 npm run dev
+
+```
 
 Backend Setup (Django):
 
 1. Navigate to the backend directory:
 
+```bash
+```bash
 cd backend
+```
 
 2. Set up a virtual environment (optional):
 
+```bash
 python -m venv venv
 source venv/bin/activate # For Linux/Mac
 venv\Scripts\activate # For Windows
+```
 
 3. Install backend dependencies:
 
+```bash
+```bash
 pip install -r requirements.txt
-
+```
 4. Run database migrations:
 
+```bash
 python manage.py makemigrations
 python manage.py migrate
 
+```
+
 5. Start the backend server:
 
+```bash
+```bash
 python manage.py runserver
 
----
+```
 
 Usage
 
@@ -167,20 +185,29 @@ Steps to Contribute:
 1. Fork the repository.
 
 2. Clone your forked repository:
-
+```bash
 git clone https://github.com/TechBubbleCommunity/TechBubbleCommunityWebsite-.git
+
+```
 
 3. Create a new branch for your feature or bug fix:
 
+```bash
 git checkout -b feature-name
-
+```
 4. Make your changes and commit them:
-
+```bash
 git commit -m "Add feature-name"
+
+```
 
 5. Push your branch to GitHub:
 
+```bash
+
 git push --set-upstream origin feature-name
+
+```
 
 6. Submit a Pull Request (PR) explaining your changes.
 
