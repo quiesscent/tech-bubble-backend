@@ -112,16 +112,13 @@ npm install
 
 3. Run the frontend server:
 ```bash
-```bash
 npm run dev
-
 ```
 
 Backend Setup (Django):
 
 1. Navigate to the backend directory:
 
-```bash
 ```bash
 cd backend
 ```
@@ -137,7 +134,6 @@ venv\Scripts\activate # For Windows
 3. Install backend dependencies:
 
 ```bash
-```bash
 pip install -r requirements.txt
 ```
 4. Run database migrations:
@@ -150,7 +146,6 @@ python manage.py migrate
 
 5. Start the backend server:
 
-```bash
 ```bash
 python manage.py runserver
 
