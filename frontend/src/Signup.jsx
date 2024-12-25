@@ -3,26 +3,19 @@ import { Link, useLocation } from 'react-router-dom';
 import icon from './assets/techbubbles.png';
 
 export default function Signup() {
-  const location = useLocation(); // Track current route for active tab
+  const location = useLocation(); 
 
-  // Form State
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
-  // Validation Errors
   const [errors, setErrors] = useState({});
-  const [apiMessage, setApiMessage] = useState(''); // Placeholder for API success/error messages
+  const [apiMessage, setApiMessage] = useState('');
 
-  // Validation Rules
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Email format
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/; // Password strength
-
-  // Handle Form Submission
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/; 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validation
     const newErrors = {};
     if (!email) newErrors.email = 'Email is required';
     else if (!emailRegex.test(email)) newErrors.email = 'Enter a valid email address';
@@ -38,7 +31,6 @@ export default function Signup() {
 
     setErrors(newErrors);
 
-    // If no errors, simulate API call
     if (Object.keys(newErrors).length === 0) {
       if (email === 'test@example.com') {
         setApiMessage('Sign-up successful! Redirecting...');
@@ -52,8 +44,6 @@ export default function Signup() {
     <>
       <div className="flex justify-between">
         <img src={icon} alt="techbubble icon" />
-
-        {/* Tabs */}
         <div className="grid grid-cols-2 divide-x border border-blue-600 max-w-sm m-3 md:w-80">
           <Link
             to="/"
@@ -79,8 +69,6 @@ export default function Signup() {
         <p className="p-2 text-center text-gray-600">
           Create an account to access our resources and start your journey!
         </p>
-
-        {/* API Message */}
         {apiMessage && (
           <p
             className={`text-center mb-4 text-sm ${
@@ -92,7 +80,6 @@ export default function Signup() {
         )}
 
         <form onSubmit={handleSubmit}>
-          {/* Email Input */}
           <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email
@@ -110,8 +97,6 @@ export default function Signup() {
             />
             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
           </div>
-
-          {/* Password Input */}
           <div className="mb-4">
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
               Password
@@ -129,8 +114,6 @@ export default function Signup() {
             />
             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
           </div>
-
-          {/* Confirm Password Input */}
           <div className="mb-4">
             <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
               Confirm Password
