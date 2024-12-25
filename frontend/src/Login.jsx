@@ -89,7 +89,7 @@ export default function Login() {
               className={`w-full p-3 mt-2 bg-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 ${
                 errors.email ? 'border-red-500' : ''
               }`}
-              placeholder="Enter your email"
+              placeholder="Enter email"
               required
             />
             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
