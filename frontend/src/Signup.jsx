@@ -43,7 +43,10 @@ export default function Signup() {
   return (
     <>
       <div className="flex justify-between">
-        <img src={icon} alt="techbubble icon" />
+       <div className="flex items-center">
+          <img src={icon} alt="techbubble icon" />
+            <h1 className="opacity-0 md:opacity-100 font-bold text-2xl">TechBubble</h1>
+        </div>
         <div className="grid grid-cols-2 divide-x border border-blue-600 max-w-sm m-3 md:w-80">
           <Link
             to="/"

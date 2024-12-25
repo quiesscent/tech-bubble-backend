@@ -37,8 +37,10 @@ export default function Login() {
   return (
     <>
       <div className="flex justify-between">
+        <div className="flex items-center">
         <img src={icon} alt="techbubble icon" />
-        <h1 className="opacity-0 md:opacity-100">TechBubble</h1>
+        <h1 className="opacity-0 md:opacity-100 font-bold text-2xl">TechBubble</h1>
+        </div>
         <div className="grid grid-cols-2 divide-x border border-blue-600 max-w-sm m-3 md:w-80">
           <Link
             to="/"
@@ -111,8 +113,8 @@ export default function Login() {
             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
           </div>
 
-          <div className="text-right mt-2">
-            <Link to="/forgot-password" className="text-blue-600 text-sm underline">
+          <div className="text-right">
+            <Link to="/forgot-password" className="text-black text-sm underline">
               Forgot password?
             </Link>
           </div>
