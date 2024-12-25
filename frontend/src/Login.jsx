@@ -31,7 +31,6 @@ export default function Login() {
 
     setErrors(newErrors);
 
-    // If no errors, simulate API call
     if (Object.keys(newErrors).length === 0) {
       // Placeholder API Simulation
       if (email === 'test@example.com' && password === 'password123') {
