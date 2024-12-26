@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import icon from './assets/techbubbles.png';
 
 export default function Signup() {
@@ -8,11 +9,22 @@ export default function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [apiMessage, setApiMessage] = useState('');
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/; 
+  const passwordRegex = /^.{6,}$/; 
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -22,8 +34,7 @@ export default function Signup() {
 
     if (!password) newErrors.password = 'Password is required';
     else if (!passwordRegex.test(password)) {
-      newErrors.password =
-        'Password must be at least 8 characters long and include one uppercase, one lowercase, and one number';
+      newErrors.password = 'Password must be at least 6 characters long';
     }
 
     if (!confirmPassword) newErrors.confirmPassword = 'Confirm Password is required';
@@ -32,11 +43,7 @@ export default function Signup() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      if (email === 'test@example.com') {
-        setApiMessage('Sign-up successful! Redirecting...');
-      } else {
-        setApiMessage('Sign-up failed. Please try again.');
-      }
+      setApiMessage('Sign-up successful! Redirecting...');
     }
   };
 
@@ -47,7 +54,7 @@ export default function Signup() {
           <img src={icon} alt="techbubble icon" />
             <h1 className="opacity-0 md:opacity-100 font-bold text-2xl">TechBubble</h1>
         </div>
-        <div className="grid grid-cols-2 divide-x border border-blue-600 max-w-sm m-3 md:w-80">
+        <div className="grid grid-cols-2 divide-x border border-blue-600 max-w-sm m-3 md:w-80 rounded-md">
           <Link
             to="/"
             className={`p-4 text-center ${
@@ -67,10 +74,10 @@ export default function Signup() {
         </div>
       </div>
 
-      <div className="max-w-sm mx-auto mt-5 p-6">
+      <div className="max-w-lg mx-auto mt-5 p-6">
         <h2 className="text-2xl font-bold text-center pt-3 mb-6">Sign Up</h2>
-        <p className="p-2 text-center text-gray-600">
-          Create an account to access our resources and start your journey!
+        <p className="p-2 text-center text-gray-600 md:whitespace-nowrap whitespace-normal">
+        Join our open-source platform to access resources and upscale your career.
         </p>
         {apiMessage && (
           <p
@@ -92,7 +99,7 @@ export default function Signup() {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`w-full p-3 mt-2 bg-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 ${
+              className={`w-full p-4 mt-2 bg-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 ${
                 errors.email ? 'border-red-500' : ''
               }`}
               placeholder="Enter your email"
@@ -104,37 +111,52 @@ export default function Signup() {
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
               Password
             </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={`w-full p-3 mt-2 bg-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 ${
-                errors.password ? 'border-red-500' : ''
-              }`}
-              placeholder="Enter your password"
-              required
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className={`w-full p-4 mt-2 bg-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 pr-10 ${
+                  errors.password ? 'border-red-500' : ''
+                }`}
+                placeholder="Enter your password"
+                required
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-600"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
           </div>
+
           <div className="mb-4">
             <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
               Confirm Password
             </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className={`w-full p-3 mt-2 bg-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 ${
-                errors.confirmPassword ? 'border-red-500' : ''
-              }`}
-              placeholder="Confirm your password"
-              required
-            />
-            {errors.confirmPassword && (
-              <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>
-            )}
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? 'text' : 'password'}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className={`w-full p-4 mt-2 bg-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 pr-10 ${
+                  errors.confirmPassword ? 'border-red-500' : ''
+                }`}
+                placeholder="Confirm your password"
+                required
+              />
+              <button
+                type="button"
+                onClick={toggleConfirmPasswordVisibility}
+                className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-600"
+              >
+                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+            {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
           </div>
 
           <button
@@ -143,13 +165,6 @@ export default function Signup() {
           >
             Confirm
           </button>
-
-          <p className="text-center mt-4">
-            Already have an account?{' '}
-            <Link to="/" className="text-blue-600">
-              Login
-            </Link>
-          </p>
         </form>
       </div>
     </>

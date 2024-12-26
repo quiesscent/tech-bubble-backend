@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import icon from './assets/techbubbles.png';
 
 export default function ForgotPassword() {
@@ -12,9 +12,9 @@ export default function ForgotPassword() {
           </div>
       </div>
 
-      <div className="max-w-sm mx-auto mt-5 p-6">
-        <h2 className="text-2xl font-bold text-center pt-3 mb-6">Forgot Password</h2>
-        <p className="p-2 text-center">
+      <div className="max-w-lg mx-auto mt-5 p-6">
+        <h2 className="text-2xl font-bold text-center pt-3 mb-4">Forgot Password</h2>
+        <p className="p-2 text-center text-gray-600 md:whitespace-nowrap whitespace-normal">
           Fill out the section below to retrieve your password.
         </p>
         <form>
@@ -24,7 +24,7 @@ export default function ForgotPassword() {
             </label>
             <input
               type="email"
-              className="w-full p-2 mt-2 bg-gray-200 rounded-md focus:ring-indigo-500"
+              className="w-full p-4 mt-2 bg-gray-200 rounded-md focus:ring-2 focus:ring-blue-500"
               placeholder="Enter email"
               required
             />
@@ -32,13 +32,13 @@ export default function ForgotPassword() {
 
           <button
             type="submit"
-            className="w-full py-2 mt-3 bg-blue-700 font-bold text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full py-3 mt-6 bg-blue-700 font-bold text-white rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-500"
           >
             Reset password
           </button>
 
           <p className="text-center mt-4">
-            <Link to="/" className="text-black text-right">Go back to Login</Link>
+            <Link to="/" className="text-blue-600">Go back to Login</Link>
           </p>
         </form>
       </div>

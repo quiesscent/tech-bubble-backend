@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import icon from './assets/techbubbles.png';
-import google from './assets/google.png';
 
 export default function Login() {
   const location = useLocation(); 
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [apiMessage, setApiMessage] = useState('');
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -61,11 +66,11 @@ export default function Login() {
         </div>
       </div>
 
-      <div className="max-w-sm mx-auto mt-5 p-6">
+      <div className="max-w-lg mx-auto mt-5 p-6">
         <h2 className="text-2xl font-bold text-center pt-3 mb-6">Login</h2>
-        <p className="p-2 text-center text-gray-600">
-          Join our open-source platform to access resources and upscale your career.
-        </p>
+        <p className="p-2 text-center text-gray-600 md:whitespace-nowrap whitespace-normal">
+       Join our open-source platform to access resources and upscale your career.
+      </p>
         {apiMessage && (
           <p
             className={`text-center mb-4 text-sm ${
@@ -86,7 +91,7 @@ export default function Login() {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`w-full p-3 mt-2 bg-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 ${
+              className={`w-full p-4 mt-2 bg-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 ${
                 errors.email ? 'border-red-500' : ''
               }`}
               placeholder="Enter email"
@@ -99,17 +104,25 @@ export default function Login() {
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
               Password
             </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={`w-full p-3 mt-2 bg-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 ${
-                errors.password ? 'border-red-500' : ''
-              }`}
-              placeholder="Enter your password"
-              required
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className={`w-full p-4 mt-2 bg-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 pr-10 ${
+                  errors.password ? 'border-red-500' : ''
+                }`}
+                placeholder="Enter your password"
+                required
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-600"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
           </div>
 
@@ -125,20 +138,6 @@ export default function Login() {
           >
             Login
           </button>
-
-          <button
-            type="button"
-            className="flex items-center justify-center bg-gray-200 w-full p-3 mt-4 rounded-md hover:bg-gray-300"
-          >
-            <img src={google} alt="Google icon" className="w-6 h-6 mr-2" />
-            Sign up with Google
-          </button>
-          <p className="text-center mt-4">
-            Don't have an account?{' '}
-            <Link to="/signup" className="text-blue-600">
-              Sign up
-            </Link>
-          </p>
         </form>
       </div>
     </>
