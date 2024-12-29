@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import icon from './assets/techbubbles.png';
-
+import axios from "axios";
 export default function Signup() {
   const location = useLocation(); 
 
@@ -25,7 +25,7 @@ export default function Signup() {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrors = {};
@@ -42,8 +42,23 @@ export default function Signup() {
 
     setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0) {
-      setApiMessage('Sign-up successful! Redirecting...');
+     if (Object.keys(newErrors).length === 0) {
+      try {
+        const response = await axios.post("http://127.0.0.1:8000/api/auth/register", {
+          email: email,
+          username: email,
+          password: password,
+        });
+        setApiMessage(response.data.message || 'Sign-up successful! Redirecting...');
+      } catch (error) {
+        if (error.response && error.response.data) {
+          setApiMessage(
+            error.response.data.error || 'An error occurred. Please try again.'
+          );
+        } else {
+          setApiMessage('Unable to connect to the server.');
+        }
+      }
     }
   };
 

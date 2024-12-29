@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import icon from './assets/techbubbles.png';
+import axios from "axios";
 
 export default function Login() {
   const location = useLocation(); 
@@ -18,7 +19,7 @@ export default function Login() {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrors = {};
@@ -31,10 +32,20 @@ export default function Login() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      if (email === 'test@example.com' && password === 'password123') {
-        setApiMessage('Login successful! Redirecting...');
-      } else {
-        setApiMessage('Invalid credentials. Please try again.');
+     try {
+        const response = await axios.post("http://127.0.0.1:8000/api/auth/login", {
+          email: email,
+          password: password,
+        });
+        setApiMessage(response.data.message || 'Sign-in successful! Redirecting...');
+      } catch (error) {
+        if (error.response && error.response.data) {
+          setApiMessage(
+            error.response.data.error || 'An error occurred. Please try again.'
+          );
+        } else {
+          setApiMessage('Unable to connect to the server.');
+        }
       }
     }
   };
