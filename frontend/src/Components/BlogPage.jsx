@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaThumbsUp, FaShareAlt } from "react-icons/fa";
 import blogHero from "../Components/assets/blog-hero.png";
@@ -12,7 +12,11 @@ import blogCard6 from "../Components/assets/blog-card6.png";
 import blogCard7 from "../Components/assets/blog-card7.png";
 import blogCard8 from "../Components/assets/blog-card8.png";
 import blogCard9 from "../Components/assets/blog-card9.png";
+import blogCard10 from "../Components/assets/blog-card10.png";
+import blogCard11 from "../Components/assets/blog-card11.png";
+import blogCard12 from "../Components/assets/blog-card12.png";
 import blogger from "../Components/assets/blogger.svg";
+import blogger2 from "../Components/assets/blogger2.svg";
 
 function BlogPage() {
   const [items, setItems] = useState([
@@ -27,10 +31,32 @@ function BlogPage() {
     { label: "Mobile Development", isActive: false },
     { label: "Content Writing", isActive: false },
   ]);
+  const [date, setDate] = useState({
+    month: "",
+    date: "",
+    year: "",
+  });
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const updateDate = () => {
+      const currentDate = new Date();
+      setDate({
+        month: currentDate.toLocaleDateString("default", { month: "short" }),
+        date: currentDate.getDate(),
+        year: currentDate.getFullYear(),
+      });
+    };
+    updateDate();
+  }, []);
+
+  const handleShareCount = () => {
+    setCount((prevCount) => preCount + 1);
+  };
 
   return (
-    <div>
-      <div>
+    <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center">
         <img
           src={blogHero}
           alt="hero image"
@@ -44,12 +70,15 @@ function BlogPage() {
           <h5 className="text-[#FFFFFF] text-center font-Inter text-[72px] font-bold leading-[86.4px] w-[1236px] h-[172px]">
             All the tech knowledge you need right in one  Bubble.
           </h5>
-          <button
-            type="submit"
-            className="text-[#FFFFFF] bg-[#0272EB] rounded w-[240px] h-[80px] font-Inter font-semibold text-[20px] leading-[24px]"
-          >
-            Explore
-          </button>
+
+          <Link to="/#">
+            <button
+              type="submit"
+              className="text-[#FFFFFF] bg-[#0272EB] rounded w-[240px] h-[80px] font-Inter font-semibold text-[20px] leading-[24px]"
+            >
+              Explore
+            </button>
+          </Link>
         </div>
       </div>
 
@@ -99,7 +128,6 @@ function BlogPage() {
               </h5>
               <div className="flex justify-start items-center gap-[19px] w-[454px] h-[40px]">
                 <div className="w-[201px] h-[40px] flex items-center gap-[8px]">
-                  {" "}
                   <img src={blogger} alt="techie" />
                   <p className="font-Inter font-bold text-[20px] leading-[28px] w-[153px] h-[28px] text-[#242222]">
                     Joanna Wellick
@@ -108,15 +136,16 @@ function BlogPage() {
                 <div className="w-[234px] h-[21px] flex items-center gap-[16px]">
                   <hr className="w-[2rem]"></hr>
                   <p className="w-[92px] h-[21px] font-Inter font-bold text-[14px] leading-[21px] text-[#6C757D]">
-                    June 28, 2024
+                    {date.month} {date.date} {date.year}
                   </p>
                   <div className="flex items-center gap-[4px] w-[77px] h-[21px]">
                     <FaShareAlt
-                      className="w-[5.88px] h-[8.03px] text-[#6C757D]"
+                      className="w-[12px] h-[12.8px] text-[#6C757D] cursor-pointer"
+                      onClick={handleShareCount}
                       alt="share icon"
                     />
                     <p className="w-[61px] h-[21px] font-Inter font-normal text-[14px] leading-[21px] text-[#6C757D]">
-                      1K shares
+                      {count} shares
                     </p>
                   </div>
                 </div>
@@ -135,9 +164,12 @@ function BlogPage() {
               </div>
               <div className="flex justify-center items-center w-[203px] h-[41px]">
                 <div className="flex justify-center items-center gap-[4px] w-[54px] h-[24px]">
-                  <FaThumbsUp className="text-[#6C757D] w-[18.56px] h-[18px]" />
+                  <FaThumbsUp
+                    className="text-[#6C757D] w-[18.56px] h-[18px]"
+                    onClick={handleShareCount}
+                  />
                   <p className="text-[#6C757D] w-[26px] h-[22px] font-Inter font-bold text-[17px] leading-[22px]">
-                    50
+                    {count}
                   </p>
                 </div>
                 <span className="w-[30px] h-[40px] text-[#6C757D66]"></span>
@@ -171,16 +203,17 @@ function BlogPage() {
                 <div className="w-[234px] h-[21px] flex items-center gap-[16px]">
                   <hr className="w-[2rem]"></hr>
                   <p className="w-[92px] h-[21px] font-Inter font-bold text-[14px] leading-[21px] text-[#6C757D]">
-                    June 28, 2024
+                    {date.month} {date.date} {date.year}
                   </p>
                   <div className="flex items-center gap-[4px] w-[77px] h-[21px]">
                     <FaShareAlt
-                      className="w-[5.88px] h-[8.03px] text-[#6C757D]"
+                      className="w-[12px] h-[12.8px] text-[#6C757D]"
+                      onClick={handleShareCount}
                       size={24}
                       color="gray"
                     />
                     <p className="w-[61px] h-[21px] font-Inter font-normal text-[14px] leading-[21px] text-[#6C757D]">
-                      1K shares
+                      {count} shares
                     </p>
                   </div>
                 </div>
@@ -199,9 +232,12 @@ function BlogPage() {
               </div>
               <div className="flex justify-center items-center w-[203px] h-[41px]">
                 <div className="flex justify-center items-center gap-[4px] w-[54px] h-[24px]">
-                  <FaThumbsUp className="text-[#6C757D] w-[18.56px] h-[18px]" />
+                  <FaThumbsUp
+                    className="text-[#6C757D] w-[18.56px] h-[18px]"
+                    onClick={handleShareCount}
+                  />
                   <p className="text-[#6C757D] w-[26px] h-[22px] font-Inter font-bold text-[17px] leading-[22px]">
-                    50
+                    {count}
                   </p>
                 </div>
                 <span className="w-[30px] h-[40px] text-[#6C757D66]"></span>
@@ -235,16 +271,17 @@ function BlogPage() {
                 <div className="w-[234px] h-[21px] flex items-center gap-[16px]">
                   <hr className="w-[2rem]"></hr>
                   <p className="w-[92px] h-[21px] font-Inter font-bold text-[14px] leading-[21px] text-[#6C757D]">
-                    June 28, 2024
+                    {date.month} {date.date} {date.year}
                   </p>
                   <div className="flex items-center gap-[4px] w-[77px] h-[21px]">
                     <FaShareAlt
-                      className="w-[5.88px] h-[8.03px] text-[#6C757D]"
+                      className="w-[12px] h-[12.8px] text-[#6C757D]"
+                      onClick={handleShareCount}
                       size={24}
                       color="gray"
                     />
                     <p className="w-[61px] h-[21px] font-Inter font-normal text-[14px] leading-[21px] text-[#6C757D]">
-                      1K shares
+                      {count} shares
                     </p>
                   </div>
                 </div>
@@ -263,9 +300,12 @@ function BlogPage() {
               </div>
               <div className="flex justify-center items-center w-[203px] h-[41px]">
                 <div className="flex justify-center items-center gap-[4px] w-[54px] h-[24px]">
-                  <FaThumbsUp className="text-[#6C757D] w-[18.56px] h-[18px]" />
+                  <FaThumbsUp
+                    className="text-[#6C757D] w-[18.56px] h-[18px]"
+                    onClick={handleShareCount}
+                  />
                   <p className="text-[#6C757D] w-[26px] h-[22px] font-Inter font-bold text-[17px] leading-[22px]">
-                    50
+                    {count}
                   </p>
                 </div>
                 <span className="w-[30px] h-[40px] text-[#6C757D66]"></span>
@@ -295,7 +335,6 @@ function BlogPage() {
               </h5>
               <div className="flex justify-start items-center gap-[19px] w-[454px] h-[40px]">
                 <div className="w-[201px] h-[40px] flex items-center gap-[8px]">
-                  {" "}
                   <img src={blogger} alt="techie" />
                   <p className="font-Inter font-bold text-[20px] leading-[28px] w-[153px] h-[28px] text-[#242222]">
                     Joanna Wellick
@@ -304,15 +343,16 @@ function BlogPage() {
                 <div className="w-[234px] h-[21px] flex items-center gap-[16px]">
                   <hr className="w-[2rem]"></hr>
                   <p className="w-[92px] h-[21px] font-Inter font-bold text-[14px] leading-[21px] text-[#6C757D]">
-                    June 28, 2024
+                    {date.month} {date.date} {date.year}
                   </p>
                   <div className="flex items-center gap-[4px] w-[77px] h-[21px]">
                     <FaShareAlt
-                      className="w-[5.88px] h-[8.03px] text-[#6C757D]"
+                      className="w-[12px] h-[12.8px] text-[#6C757D]"
+                      onClick={handleShareCount}
                       alt="share icon"
                     />
                     <p className="w-[61px] h-[21px] font-Inter font-normal text-[14px] leading-[21px] text-[#6C757D]">
-                      1K shares
+                      {count} shares
                     </p>
                   </div>
                 </div>
@@ -331,9 +371,12 @@ function BlogPage() {
               </div>
               <div className="flex justify-center items-center w-[203px] h-[41px]">
                 <div className="flex justify-center items-center gap-[4px] w-[54px] h-[24px]">
-                  <FaThumbsUp className="text-[#6C757D] w-[18.56px] h-[18px]" />
+                  <FaThumbsUp
+                    className="text-[#6C757D] w-[18.56px] h-[18px]"
+                    onClick={handleShareCount}
+                  />
                   <p className="text-[#6C757D] w-[26px] h-[22px] font-Inter font-bold text-[17px] leading-[22px]">
-                    50
+                    {count}
                   </p>
                 </div>
                 <span className="w-[30px] h-[40px] text-[#6C757D66]"></span>
@@ -367,16 +410,17 @@ function BlogPage() {
                 <div className="w-[234px] h-[21px] flex items-center gap-[16px]">
                   <hr className="w-[2rem]"></hr>
                   <p className="w-[92px] h-[21px] font-Inter font-bold text-[14px] leading-[21px] text-[#6C757D]">
-                    June 28, 2024
+                    {date.month} {date.date} {date.year}
                   </p>
                   <div className="flex items-center gap-[4px] w-[77px] h-[21px]">
                     <FaShareAlt
-                      className="w-[5.88px] h-[8.03px] text-[#6C757D]"
+                      className="w-[12px] h-[12.8px] text-[#6C757D]"
+                      onClick={handleShareCount}
                       size={24}
                       color="gray"
                     />
                     <p className="w-[61px] h-[21px] font-Inter font-normal text-[14px] leading-[21px] text-[#6C757D]">
-                      1K shares
+                      {count} shares
                     </p>
                   </div>
                 </div>
@@ -395,9 +439,12 @@ function BlogPage() {
               </div>
               <div className="flex justify-center items-center w-[203px] h-[41px]">
                 <div className="flex justify-center items-center gap-[4px] w-[54px] h-[24px]">
-                  <FaThumbsUp className="text-[#6C757D] w-[18.56px] h-[18px]" />
+                  <FaThumbsUp
+                    className="text-[#6C757D] w-[18.56px] h-[18px]"
+                    onClick={handleShareCount}
+                  />
                   <p className="text-[#6C757D] w-[26px] h-[22px] font-Inter font-bold text-[17px] leading-[22px]">
-                    50
+                    {count}
                   </p>
                 </div>
                 <span className="w-[30px] h-[40px] text-[#6C757D66]"></span>
@@ -431,16 +478,17 @@ function BlogPage() {
                 <div className="w-[234px] h-[21px] flex items-center gap-[16px]">
                   <hr className="w-[2rem]"></hr>
                   <p className="w-[92px] h-[21px] font-Inter font-bold text-[14px] leading-[21px] text-[#6C757D]">
-                    June 28, 2024
+                    {date.month} {date.date} {date.year}
                   </p>
                   <div className="flex items-center gap-[4px] w-[77px] h-[21px]">
                     <FaShareAlt
-                      className="w-[5.88px] h-[8.03px] text-[#6C757D]"
+                      className="w-[12px] h-[12.8px] text-[#6C757D]"
+                      onClick={handleShareCount}
                       size={24}
                       color="gray"
                     />
                     <p className="w-[61px] h-[21px] font-Inter font-normal text-[14px] leading-[21px] text-[#6C757D]">
-                      1K shares
+                      {count} shares
                     </p>
                   </div>
                 </div>
@@ -459,9 +507,12 @@ function BlogPage() {
               </div>
               <div className="flex justify-center items-center w-[203px] h-[41px]">
                 <div className="flex justify-center items-center gap-[4px] w-[54px] h-[24px]">
-                  <FaThumbsUp className="text-[#6C757D] w-[18.56px] h-[18px]" />
+                  <FaThumbsUp
+                    className="text-[#6C757D] w-[18.56px] h-[18px]"
+                    onClick={handleShareCount}
+                  />
                   <p className="text-[#6C757D] w-[26px] h-[22px] font-Inter font-bold text-[17px] leading-[22px]">
-                    50
+                    {count}
                   </p>
                 </div>
                 <span className="w-[30px] h-[40px] text-[#6C757D66]"></span>
@@ -500,15 +551,16 @@ function BlogPage() {
                 <div className="w-[234px] h-[21px] flex items-center gap-[16px]">
                   <hr className="w-[2rem]"></hr>
                   <p className="w-[92px] h-[21px] font-Inter font-bold text-[14px] leading-[21px] text-[#6C757D]">
-                    June 28, 2024
+                    {date.month} {date.date} {date.year}
                   </p>
                   <div className="flex items-center gap-[4px] w-[77px] h-[21px]">
                     <FaShareAlt
-                      className="w-[5.88px] h-[8.03px] text-[#6C757D]"
+                      className="w-[12px] h-[12.8px] text-[#6C757D]"
+                      onClick={handleShareCount}
                       alt="share icon"
                     />
                     <p className="w-[61px] h-[21px] font-Inter font-normal text-[14px] leading-[21px] text-[#6C757D]">
-                      1K shares
+                      {count} shares
                     </p>
                   </div>
                 </div>
@@ -527,9 +579,12 @@ function BlogPage() {
               </div>
               <div className="flex justify-center items-center w-[203px] h-[41px]">
                 <div className="flex justify-center items-center gap-[4px] w-[54px] h-[24px]">
-                  <FaThumbsUp className="text-[#6C757D] w-[18.56px] h-[18px]" />
+                  <FaThumbsUp
+                    className="text-[#6C757D] w-[18.56px] h-[18px]"
+                    onClick={handleShareCount}
+                  />
                   <p className="text-[#6C757D] w-[26px] h-[22px] font-Inter font-bold text-[17px] leading-[22px]">
-                    50
+                    {count}
                   </p>
                 </div>
                 <span className="w-[30px] h-[40px] text-[#6C757D66]"></span>
@@ -563,16 +618,17 @@ function BlogPage() {
                 <div className="w-[234px] h-[21px] flex items-center gap-[16px]">
                   <hr className="w-[2rem]"></hr>
                   <p className="w-[92px] h-[21px] font-Inter font-bold text-[14px] leading-[21px] text-[#6C757D]">
-                    June 28, 2024
+                    {date.month} {date.date} {date.year}
                   </p>
                   <div className="flex items-center gap-[4px] w-[77px] h-[21px]">
                     <FaShareAlt
-                      className="w-[5.88px] h-[8.03px] text-[#6C757D]"
+                      className="w-[12px] h-[12.8px] text-[#6C757D]"
+                      onClick={handleShareCount}
                       size={24}
                       color="gray"
                     />
                     <p className="w-[61px] h-[21px] font-Inter font-normal text-[14px] leading-[21px] text-[#6C757D]">
-                      1K shares
+                      {count} shares
                     </p>
                   </div>
                 </div>
@@ -591,9 +647,12 @@ function BlogPage() {
               </div>
               <div className="flex justify-center items-center w-[203px] h-[41px]">
                 <div className="flex justify-center items-center gap-[4px] w-[54px] h-[24px]">
-                  <FaThumbsUp className="text-[#6C757D] w-[18.56px] h-[18px]" />
+                  <FaThumbsUp
+                    className="text-[#6C757D] w-[18.56px] h-[18px]"
+                    onClick={handleShareCount}
+                  />
                   <p className="text-[#6C757D] w-[26px] h-[22px] font-Inter font-bold text-[17px] leading-[22px]">
-                    50
+                    {count}
                   </p>
                 </div>
                 <span className="w-[30px] h-[40px] text-[#6C757D66]"></span>
@@ -627,16 +686,17 @@ function BlogPage() {
                 <div className="w-[234px] h-[21px] flex items-center gap-[16px]">
                   <hr className="w-[2rem]"></hr>
                   <p className="w-[92px] h-[21px] font-Inter font-bold text-[14px] leading-[21px] text-[#6C757D]">
-                    June 28, 2024
+                    {date.month} {date.date} {date.year}
                   </p>
                   <div className="flex items-center gap-[4px] w-[77px] h-[21px]">
                     <FaShareAlt
-                      className="w-[5.88px] h-[8.03px] text-[#6C757D]"
+                      className="w-[12px] h-[12.8px] text-[#6C757D]"
+                      onClick={handleShareCount}
                       size={24}
                       color="gray"
                     />
                     <p className="w-[61px] h-[21px] font-Inter font-normal text-[14px] leading-[21px] text-[#6C757D]">
-                      1K shares
+                      {count} shares
                     </p>
                   </div>
                 </div>
@@ -655,9 +715,12 @@ function BlogPage() {
               </div>
               <div className="flex justify-center items-center w-[203px] h-[41px]">
                 <div className="flex justify-center items-center gap-[4px] w-[54px] h-[24px]">
-                  <FaThumbsUp className="text-[#6C757D] w-[18.56px] h-[18px]" />
+                  <FaThumbsUp
+                    className="text-[#6C757D] w-[18.56px] h-[18px]"
+                    onClick={handleShareCount}
+                  />
                   <p className="text-[#6C757D] w-[26px] h-[22px] font-Inter font-bold text-[17px] leading-[22px]">
-                    50
+                    {count}
                   </p>
                 </div>
                 <span className="w-[30px] h-[40px] text-[#6C757D66]"></span>
@@ -672,11 +735,10 @@ function BlogPage() {
 
       <div>
         <div className="flex items-center justify-center h-screen relative">
-          {" "}
           <img
             src={blogHero2}
             alt="hero image"
-            className="w-[1489px] h-[634px]"
+            className="w-[1489px] h-[634px] transition-transform duration-300 hover:scale-125"
           />
         </div>
         <div className="flex flex-col justify-center items-center gap-[34px] absolute top-[3973px] left-[141px] w-[1236px] h-[242px] ">
@@ -684,14 +746,134 @@ function BlogPage() {
             10 Essential UX Design Principles for Creating User-Friendly Mobile
             Apps
           </h5>
-          <button
-            type="submit"
-            className="text-[#FFFFFF] bg-[#0272EB] rounded w-[240px] h-[80px] font-Inter font-semibold text-[28px] leading-[33.6px]"
-          >
-            View Post
-          </button>
+          <Link to="#">
+            <button
+              type="submit"
+              className="text-[#FFFFFF] bg-[#0272EB] rounded w-[240px] h-[80px] font-Inter font-semibold text-[28px] leading-[33.6px]"
+            >
+              View Post
+            </button>
+          </Link>
         </div>
       </div>
+
+      <div className="flex justify-center items-center gap-10 w-[1489px]  h-[791px]">
+        <div className="flex flex-col items-center gap-2">
+          <div className="relative">
+            <img
+              className="w-[609px] h-[391px]"
+              src={blogCard10}
+              alt="blog image"
+            />
+            <div className="flex flex-col justify-start items-start py-4 px-10 gap-[19px] w-[527px] h-[195px] inset-0 backdrop-blur-xs absolute top-[160px] left-[40px] bg-[#FFFFFF5E]">
+              <div className="flex items-center w-[201px] h-[40px] gap-[19px]">
+                <img
+                  className="w-[40px] h-[40px]"
+                  src={blogger2}
+                  alt="techie"
+                />
+                <p className="font-Inter font-bold text-[20px] leading-[28px] w-[153px] h-[28px] text-[#121416]">
+                  Joanna Wellick
+                </p>
+              </div>
+              <h5 className=" w-[477px] h-[41px] font-Inter font-bold text-[24px] leading-[41px] text-[#121416]">
+                Breaking into Tech: Advice for Newbies
+              </h5>
+              <div className="self-end w-[183px] h-[21px] flex items-center gap-[16px]">
+                <p className="w-[92px] h-[21px] font-Inter font-bold text-[14px] leading-[21px] text-[#242222CC]">
+                  {date.month} {date.date} {date.year}
+                </p>
+
+                <div className="flex items-center gap-[4px] w-[77px] h-[21px]">
+                  <FaShareAlt
+                    className="w-[12px] h-[12.8px] text-[#6C757D]"
+                    onClick={handleShareCount}
+                  />
+                  <p className="w-[61px] h-[21px] font-Inter font-normal text-[14px] leading-[21px] text-[#242222CC]">
+                    {count} shares
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative">
+            <img
+              className="w-[609px] h-[391px]"
+              src={blogCard11}
+              alt="blog image"
+            />
+            <div className="flex flex-col justify-start items-start py-4 px-10 gap-[19px] w-[527px] h-[195px] inset-0 backdrop-blur-xs absolute top-[143px] left-[40px] bg-[#FFFFFF5E]">
+              <div className="flex items-center w-[201px] h-[40px] gap-[19px]">
+                <img
+                  className="w-[40px] h-[40px]"
+                  src={blogger2}
+                  alt="techie"
+                />
+                <p className="font-Inter font-bold text-[20px] leading-[28px] w-[153px] h-[28px] text-[#121416]">
+                  Joanna Wellick
+                </p>
+              </div>
+              <h5 className="w-[477px] h-[41px] font-Inter font-bold text-[24px] leading-[41px] text-[#121416]">
+                Breaking into Tech: Advice for Newbies
+              </h5>
+              <div className="self-end w-[183px] h-[21px] flex items-center gap-[16px]">
+                <p className="w-[92px] h-[21px] font-Inter font-bold text-[14px] leading-[21px] text-[#242222CC]">
+                  {date.month} {date.date} {date.year}
+                </p>
+
+                <div className="flex items-center gap-[4px] w-[77px] h-[21px]">
+                  <FaShareAlt
+                    className="w-[12px] h-[12.8px] text-[#242222CC]"
+                    onClick={handleShareCount}
+                  />
+                  <p className="w-[61px] h-[21px] font-Inter font-normal text-[14px] leading-[21px] text-[#242222CC]">
+                    {count} shares
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative">
+          <img
+            className="w-[838px] h-[791px]"
+            src={blogCard12}
+            alt="blog image"
+          />
+          <div className="flex flex-col justify-start items-start gap-[19px] py-4 px-10 w-[527px] h-[195px] absolute top-[534px] left-[50px] inset-0 backdrop-blur-xs bg-[#FFFFFF5E] ">
+            <div className="flex items-center w-[201px] h-[40px] gap-[19px]">
+              <img className="w-[40px] h-[40px]" src={blogger2} alt="techie" />
+              <p className="font-Inter font-bold text-[20px] leading-[28px] w-[153px] h-[28px] text-[#121416]">
+                Joanna Wellick
+              </p>
+            </div>
+            <h5 className="w-[477px] h-[41px] font-Inter font-bold text-[24px] leading-[41px] text-[#121416]">
+              Breaking into Tech: Advice for Newbies
+            </h5>
+            <div className="self-end w-[183px] h-[21px] flex items-center gap-[16px]">
+              <p className="w-[92px] h-[21px] font-Inter font-bold text-[14px] leading-[21px] text-[#242222CC]">
+                {date.month} {date.date} {date.year}
+              </p>
+
+              <div className="flex items-center gap-[4px] w-[77px] h-[21px]">
+                <FaShareAlt
+                  className="w-[12px] h-[12.8px] text-[#242222CC]"
+                  onClick={handleShareCount}
+                />
+                <p className="w-[61px] h-[21px] font-Inter font-normal text-[14px] leading-[21px] text-[#242222CC]">
+                  {count} shares
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer className="my-4">
+        <h1>ADD FOOTER HERE!</h1>
+      </footer>
     </div>
   );
 }
