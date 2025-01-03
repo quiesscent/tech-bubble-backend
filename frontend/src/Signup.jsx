@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import icon from './assets/techbubbles.png';
-import axios from "axios";
+import axios from 'axios';
+
 export default function Signup() {
   const location = useLocation(); 
 
@@ -44,7 +45,7 @@ export default function Signup() {
 
      if (Object.keys(newErrors).length === 0) {
       try {
-        const response = await axios.post("http://127.0.0.1:8000/api/auth/register", {
+        const response = await axios.post("https://tech-bubble-api.onrender.com/api/auth/register", {
           email: email,
           username: email,
           password: password,
