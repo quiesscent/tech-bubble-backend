@@ -1,5 +1,5 @@
 from django.db import models
-
+from auths.models import *
 # Create your models here.
 
 class Announcement(models.Model):
@@ -46,3 +46,20 @@ class Contact(models.Model):
     def __str__(self):
         return f'Message from {self.name}'
 
+
+class Blog(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='blogs/', default='blog.png')
+    created_at = models.DateTimeField(auto_now_add=True)
+    likes = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f'{self.title}'
+
+class Comment(models.Model):
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name="comments")
+    user = models.CharField(max_length=200)
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
