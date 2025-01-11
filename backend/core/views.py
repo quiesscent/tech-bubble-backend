@@ -6,8 +6,9 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from django.http import Http404
 from rest_framework import status
 from rest_framework.response import Response
+from drf_yasg.utils import swagger_auto_schema
 from auths.permissions import IsOwnerOrAdmin
-
+from drf_yasg import openapi
 # Create your views here.
 
 
@@ -83,12 +84,20 @@ class ExpertiseDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ExpertiseSerializer
 
 
-class BlogListCreateView(APIView):
+class BlogList(APIView):
+    @swagger_auto_schema(
+        operation_description="Get a list of blogs",
+        responses={200: BlogSerializer(many=True)},
+    )
     def get(self, request):
         blogs = Blog.objects.all()
         serializer = BlogSerializer(blogs, many=True)
         return Response(serializer.data)
 
+    @swagger_auto_schema(
+        request_body=BlogSerializer,
+        responses={201: BlogSerializer},
+    )
     def post(self, request):
         serializer = BlogSerializer(data=request.data)
         if serializer.is_valid():
@@ -96,39 +105,38 @@ class BlogListCreateView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class BlogDetail(APIView):
+    @swagger_auto_schema(
+        responses={200: BlogSerializer},
+    )
+    def get(self, request, pk):
+        try:
+            blog = Blog.objects.get(pk=pk)
+            serializer = BlogSerializer(blog)
+            return Response(serializer.data)
+        except Blog.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
-class CommentListCreateView(APIView):
-
-    def get(self, request, blog_id):
-        comments = Comment.objects.filter(blog_id=blog_id)
+class CommentList(APIView):
+    @swagger_auto_schema(
+        operation_description="Get a list of comments",
+        responses={200: CommentSerializer(many=True)},
+    )
+    def get(self, request):
+        comments = Comment.objects.all()
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
 
-    def post(self, request, blog_id):
-        data = request.data
-        data['blog'] = blog_id
-        serializer = CommentSerializer(data=data)
+    @swagger_auto_schema(
+        request_body=CommentSerializer,
+        responses={201: CommentSerializer},
+    )
+    def post(self, request):
+        serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class BlogDetailView(APIView):
-    """
-    Retrieve a single blog by its ID.
-    """
-    def get(self, request, blog_id):
-        """
-        Fetch a specific blog.
-        Path parameter:
-        - `blog_id`: ID of the blog to retrieve.
-        """
-        try:
-            blog = Blog.objects.get(id=blog_id)
-            serializer = BlogSerializer(blog)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except Blog.DoesNotExist:
-            raise NotFound({"error": "Blog not found"})
 
 class BlogLikeView(APIView):
     def post(self, request, blog_id):
