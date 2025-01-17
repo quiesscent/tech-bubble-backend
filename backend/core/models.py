@@ -32,10 +32,19 @@ class Expertise(models.Model):
     content = models.TextField(default='')
     image = models.ImageField(upload_to='expertise/', default='expertise.png')
 
-
     def __str__(self):
         return f'{self.title} Content'
 
+class Category(models.Model):
+    name = models.CharField(max_length=1000, default='')
+
+
+    class Meta:
+        verbose_name_plural= 'Categories'
+        
+    def __str__(self):
+
+        return f'{self.name}'
 
 class Contact(models.Model):
     name = models.CharField(max_length=100, default='')
@@ -54,7 +63,8 @@ class Blog(models.Model):
     image = models.ImageField(upload_to='blogs/', default='blog.png')
     created_at = models.DateTimeField(auto_now_add=True)
     likes = models.PositiveIntegerField(default=0)
-
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
+    
     def __str__(self):
         return f'{self.title}'
 
