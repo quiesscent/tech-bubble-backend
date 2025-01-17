@@ -105,6 +105,7 @@ class BlogList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class BlogDetail(APIView):
     @swagger_auto_schema(
         responses={200: BlogSerializer},

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'auths',
     'core',
+    'donations',
     'drf_yasg',
     'django.contrib.sites',   # Required for django-allauth
     'allauth',
