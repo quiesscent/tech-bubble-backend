@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import *
-
+from donations.views import *
 urlpatterns = [
     path('announcement/create', AnnouncementCreate.as_view(), name='create-announcement'),
     path('team/create', TeamCreate.as_view(), name='create-team'),
@@ -15,5 +15,6 @@ urlpatterns = [
     path('blogs/', BlogList.as_view(), name='blog_list_create'),
     path('blogs/<int:blog_id>/', BlogDetail.as_view(), name='blog_detail'),
     path('blogs/<int:blog_id>/like/', BlogLikeView.as_view(), name='blog_like'),
+    path('sponsorship-or-donation/', SponsorshipOrDonationView.as_view(), name='sponsorship-or-donation'),
     path('blogs/<int:blog_id>/comments/', CommentList.as_view(), name='comment_list_create'),
-]
+] 
