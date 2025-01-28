@@ -1,5 +1,5 @@
 from django.db import models
-
+from auths.models import *
 # Create your models here.
 
 class Announcement(models.Model):
@@ -32,10 +32,19 @@ class Expertise(models.Model):
     content = models.TextField(default='')
     image = models.ImageField(upload_to='expertise/', default='expertise.png')
 
-
     def __str__(self):
         return f'{self.title} Content'
 
+class Category(models.Model):
+    name = models.CharField(max_length=1000, default='')
+
+
+    class Meta:
+        verbose_name_plural= 'Categories'
+        
+    def __str__(self):
+
+        return f'{self.name}'
 
 class Contact(models.Model):
     name = models.CharField(max_length=100, default='')
@@ -46,3 +55,21 @@ class Contact(models.Model):
     def __str__(self):
         return f'Message from {self.name}'
 
+
+class Blog(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='blogs/', default='blog.png')
+    created_at = models.DateTimeField(auto_now_add=True)
+    likes = models.PositiveIntegerField(default=0)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
+    
+    def __str__(self):
+        return f'{self.title}'
+
+class Comment(models.Model):
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name="comments")
+    user = models.CharField(max_length=200)
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
