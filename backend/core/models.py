@@ -58,13 +58,14 @@ class Contact(models.Model):
 
 class Blog(models.Model):
     title = models.CharField(max_length=200)
-    description = models.TextField()
-    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    content = models.TextField()
+    # author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='blogs/', default='blog.png')
+    # video = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
-    likes = models.PositiveIntegerField(default=0)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
-    
+    likes = models.PositiveIntegerField(default=0, blank=True, null=True)
+    category = models.CharField(max_length=255, default='General')
+
     def __str__(self):
         return f'{self.title}'
 
