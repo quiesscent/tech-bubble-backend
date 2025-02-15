@@ -99,6 +99,7 @@ class BlogList(APIView):
         responses={201: BlogSerializer},
     )
     def post(self, request):
+        parser_classes = [MultiPartParser, FormParser]
         serializer = BlogSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -148,4 +149,3 @@ class BlogLikeView(APIView):
             return Response({"message": "Blog liked successfully", "likes": blog.likes}, status=status.HTTP_200_OK)
         except Blog.DoesNotExist:
             return Response({"error": "Blog not found"}, status=status.HTTP_404_NOT_FOUND)
-
