@@ -41,7 +41,7 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural= 'Categories'
-        
+
     def __str__(self):
 
         return f'{self.name}'
@@ -63,7 +63,7 @@ class Blog(models.Model):
     image = models.ImageField(upload_to='blogs/', default='blog.png')
     # video = models.CharField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
-    likes = models.PositiveIntegerField(default=0, blank=True, null=True)
+    likes = models.PositiveIntegerField(blank=True, null=True)
     category = models.CharField(max_length=255, default='General')
 
     def __str__(self):
