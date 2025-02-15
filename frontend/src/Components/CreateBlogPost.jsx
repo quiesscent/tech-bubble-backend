@@ -5,7 +5,7 @@ import uploadIcon from "./assets/upload-icon.svg";
 import message from "./assets/Message 4.svg";
 import notification from "./assets/Notification 4.svg";
 import profile from "./assets/profile.svg";
-import backarrow from "./assets/vector.svg";
+import backarrow from "./assets/Vector.svg";
 import arrowdown from "./assets/arrow-down.svg";
 
 function CreateBlogPost() {
@@ -46,49 +46,58 @@ function CreateBlogPost() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+
+    if (!validateForm()) return; // Ensure validation passes before proceeding
+
     setIsSubmitting(true);
+    setError(null); // Reset previous errors
+
     try {
       const formData = new FormData();
       formData.append("title", blogTitle);
-      formData.append("description", blogContent);
+      formData.append("content", blogContent);
       formData.append("category", category);
+      formData.append("likes", 0);
+
       if (keyword.length > 0)
         formData.append("keywords", JSON.stringify(keyword));
-      if (category) formData.append("category", category);
       if (reference) formData.append("reference", reference);
       if (selectImage) formData.append("image", selectImage);
       if (summary) formData.append("summary", summary);
       if (videoUrl) formData.append("video_url", videoUrl);
 
+      console.log(
+        "Submitting Form Data:",
+        Object.fromEntries(formData.entries()),
+      );
+
       const response = await axios.post(
-        "http://tech-bubble-api.onrender.com/api/blogs/",
+        "http://localhost:8000/api/blogs/",
         formData,
         {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+          headers: { "Content-Type": "multipart/form-data" },
+          withCredentials: true,
+        },
       );
-      for (let pair of formData.entries()) {
-        console.log(pair[0] + ": " + pair[1]);
-      }
 
-      alert("Blog created successfully!");
-      console.log(response.data);
       if (response.status === 201) {
-        setSuccess("Blog created successfully!");
+        setSuccess("Blog created successfully! 🎉");
+        alert("Blog created successfully!");
         clearForm();
       } else {
-        setError("Problem! Failed to create blog.");
+        throw new Error("Unexpected response status: " + response.status);
       }
-    } catch (err) {
-      alert("Blog creation failed!");
-      console.error(err.response || err.message);
-      setError(
-        "Ooops! An error occured while submitting the Blog. Please try again.",
-        error.message
-      );
+    } catch (error) {
+      console.error("Error submitting blog:", error);
+
+      // Handle specific errors (e.g., network issues, server errors)
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Something went wrong!";
+
+      setError(`Oops! Failed to create blog. ${errorMessage}`);
+      alert(`Blog creation failed! \n${errorMessage}`);
     } finally {
       setIsSubmitting(false);
     }
